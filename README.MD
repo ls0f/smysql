@@ -2,6 +2,25 @@
 
 一个简单的MySQLdb orm封装，基本能覆盖常用的CURD操作。
 
+### 安装
+
+`pip install smysql`
+
+### 使用
+
+```
+from smysql import DB, DBConfig
+
+DBConfig.host = '127.0.0.1'
+DBConfig.passwd = ''
+DBConfig.user = 'root'
+DBConfig.charset = 'utf8'
+
+db = DB("test_db")
+db.query('xxx')
+
+```
+
 
 ### 测试
 
