@@ -6,6 +6,7 @@ class DBConfig(object):
 
     # mysql 配置
     host = "127.0.0.1"
+    port = 3306
     passwd = ""
     charset = "utf8"
     user = "root"
@@ -44,6 +45,9 @@ class DB(object):
         with self:
             pass
 
+    def call_after_commit(self):
+        pass
+
     def __enter__(self):
 
         if self.conn is None:
@@ -59,6 +63,7 @@ class DB(object):
         else:
             if self._trans_end is True:
                 self.conn.commit()
+                self.call_after_commit()
 
         if self.auto_close_conn and self._trans_end is True:
             self.close_conn()

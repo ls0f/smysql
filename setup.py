@@ -7,7 +7,7 @@ DESCRIPTION = "手机号码库"
 AUTHOR = "lovedboy"
 AUTHOR_EMAIL = "lovedboy.tk@qq.com"
 URL = "https://github.com/lovedboy/smysql"
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 setup(
     name=NAME,

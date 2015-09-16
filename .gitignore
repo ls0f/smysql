@@ -21,3 +21,5 @@ cscope.*
 secure_settings.py
 /static/payment_flow_attachments/
 secure_settings.py
+dist
+smysql.egg-info
