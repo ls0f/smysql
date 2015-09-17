@@ -3,11 +3,11 @@ from setuptools import setup,find_packages
 
 PACKAGE = "smysql"
 NAME = "smysql"
-DESCRIPTION = "手机号码库"
+DESCRIPTION = "simple mysql orm"
 AUTHOR = "lovedboy"
 AUTHOR_EMAIL = "lovedboy.tk@qq.com"
 URL = "https://github.com/lovedboy/smysql"
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 
 setup(
     name=NAME,

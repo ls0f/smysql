@@ -92,6 +92,7 @@ class DB(object):
                                host=DBConfig.host,
                                passwd=DBConfig.passwd,
                                charset=DBConfig.charset,
+                               port=DBConfig.port,
                                user=DBConfig.user)
         return conn
 
