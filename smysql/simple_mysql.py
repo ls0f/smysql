@@ -60,6 +60,7 @@ class DB(object):
         self.cur.close()
         if exc:
             self.conn.rollback()
+            self.call_after_commit()
         else:
             if self._trans_end is True:
                 self.conn.commit()
