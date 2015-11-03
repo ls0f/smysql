@@ -6,4 +6,6 @@ DBConfig.user = 'root'
 DBConfig.charset = 'utf8'
 
 db = DB("test_db")
-db.query('user')
+print db.query('user', print_sql=True, page=0)
+
+db.update("user",query_dict={'uid': 2}, update_dict={"name": "xxx"}, sql_row_count=2)

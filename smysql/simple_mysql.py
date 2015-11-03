@@ -1,6 +1,10 @@
 #coding:utf-8
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+LOGGER = logging.getLogger("smysql")
 import MySQLdb
+
 
 class DBConfig(object):
 
@@ -11,6 +15,7 @@ class DBConfig(object):
     charset = "utf8"
     user = "root"
 
+
 class Field(object):
 
     def __init__(self, string):
@@ -18,6 +23,7 @@ class Field(object):
 
     def __str__(self):
         return self.string
+
 
 class DB(object):
 
@@ -97,7 +103,11 @@ class DB(object):
         return conn
 
     def insert(self, table_name, obj_dict, mode='insert', print_sql=False):
-        assert mode in ("insert", 'replace', 'insert_or_update')
+        try:
+            assert mode in ("insert", 'replace', 'insert_or_update')
+        except AssertionError:
+            LOGGER.error("mode must be in `insert`、`replace`、`insert_or_update`")
+            raise
         placeholders = ', '.join(['%s'] * len(obj_dict))
         columns = ', '.join(obj_dict.keys())
         args = obj_dict.values()
@@ -114,8 +124,8 @@ class DB(object):
             args = args*2
 
         if print_sql:
-            print "sql:", sql
-            print "args:", args
+            LOGGER.debug("sql:{}".format(sql))
+            LOGGER.debug("args:{}".format(args))
 
         with self:
             self.cur.execute(sql, args=args)
@@ -130,13 +140,17 @@ class DB(object):
         args = [item for item in update_dict.values() if isinstance(item, Field) is False] + args
         sql = "update %s set %s %s " %(table_name, update, query)
         if print_sql:
-            print "sql:", sql
-            print "args:", args
+            LOGGER.debug("sql:{}".format(sql))
+            LOGGER.debug("args:{}".format(args))
 
         with self:
             row_count = self.cur.execute(sql, args=args)
             if sql_row_count:
-                assert row_count == sql_row_count
+                try:
+                    assert row_count == sql_row_count
+                except AssertionError:
+                    LOGGER.error("{} don't effect {} rows".format(sql, sql_row_count))
+                    raise
         return row_count
 
     def delete(self, table_name, query_dict, print_sql=False, sql_row_count=0):
@@ -145,13 +159,16 @@ class DB(object):
         sql = "delete from %s %s" % (table_name, query)
 
         if print_sql:
-            print "sql:", sql
-            print "args:", args
+            LOGGER.debug("sql:{}".format(sql))
+            LOGGER.debug("args:{}".format(args))
 
         with self:
             row_count = self.cur.execute(sql, args=args)
-            if sql_row_count:
-                assert sql_row_count == row_count
+            try:
+                assert row_count == sql_row_count
+            except AssertionError:
+                LOGGER.error("{} don't effect {} rows".format(sql, sql_row_count))
+                raise
 
         return row_count
 
@@ -167,8 +184,8 @@ class DB(object):
         query, args = DB.gen_sql_query(query_dict)
         sql = "select %s from %s %s %s %s %s" % (','.join(fields), table_name, query, group_by, order_by, page_p)
         if print_sql:
-            print "sql:", sql
-            print "args:", args
+            LOGGER.debug("sql:{}".format(sql))
+            LOGGER.debug("args:{}".format(args))
 
         with self:
             self.cur = self.conn.cursor(MySQLdb.cursors.DictCursor)
@@ -226,8 +243,11 @@ class DB(object):
             'regexp': 'regexp',
         }
 
-        if op not in operator_dict:
-            assert Exception("not supported operator")
+        try:
+            assert op in operator_dict
+        except AssertionError:
+            LOGGER.error("not supported operator")
+            raise
 
         return operator_dict[op]
 
