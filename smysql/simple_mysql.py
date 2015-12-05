@@ -129,7 +129,7 @@ class DB(object):
 
         with self:
             self.cur.execute(sql, args=args)
-            last_id = int(self.conn.insert_id())
+            last_id = self.conn.insert_id()
             return last_id
 
     def update(self, table_name, query_dict, update_dict, print_sql=False, sql_row_count=0):

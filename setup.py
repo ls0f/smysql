@@ -7,7 +7,7 @@ DESCRIPTION = "simple mysql orm"
 AUTHOR = "lovedboy"
 AUTHOR_EMAIL = "lovedboy.tk@qq.com"
 URL = "https://github.com/lovedboy/smysql"
-VERSION = '0.2'
+VERSION = '0.2.1'
 
 setup(
     name=NAME,
