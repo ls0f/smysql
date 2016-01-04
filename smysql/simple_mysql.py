@@ -223,7 +223,7 @@ class DB(object):
                 query += " %s %s in (%s)" % (place, key[0], ','.join(['%s']*len(value)),)
                 args.extend(list(value))
             elif sql_operator == 'sql':
-                query += "%s %s" % (place, value)
+                query += " %s %s" % (place, value)
             else:
                 query += " %s %s %s %s" % (place, key[0], sql_operator, '%s')
                 args.append(value)
