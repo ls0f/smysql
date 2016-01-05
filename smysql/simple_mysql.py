@@ -145,12 +145,11 @@ class DB(object):
 
         with self:
             row_count = self.cur.execute(sql, args=args)
-            if sql_row_count:
-                try:
-                    assert row_count == sql_row_count
-                except AssertionError:
-                    LOGGER.error("{} don't effect {} rows".format(sql, sql_row_count))
-                    raise
+            try:
+                assert sql_row_count == 0 or row_count == sql_row_count
+            except AssertionError:
+                LOGGER.error("{} don't effect {} rows".format(sql, sql_row_count))
+                raise
         return row_count
 
     def delete(self, table_name, query_dict, print_sql=False, sql_row_count=0):
@@ -165,7 +164,7 @@ class DB(object):
         with self:
             row_count = self.cur.execute(sql, args=args)
             try:
-                assert row_count == sql_row_count
+                assert sql_row_count == 0 or row_count == sql_row_count
             except AssertionError:
                 LOGGER.error("{} don't effect {} rows".format(sql, sql_row_count))
                 raise
