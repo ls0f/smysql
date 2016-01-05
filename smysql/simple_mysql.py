@@ -224,6 +224,8 @@ class DB(object):
                 args.extend(list(value))
             elif sql_operator == 'sql':
                 query += " %s %s" % (place, value)
+            elif isinstance(value, Field):
+                query += " %s %s %s %s" % (place, key[0], sql_operator, value)
             else:
                 query += " %s %s %s %s" % (place, key[0], sql_operator, '%s')
                 args.append(value)
