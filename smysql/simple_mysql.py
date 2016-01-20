@@ -114,8 +114,12 @@ class DB(object):
         start = ''
         if mode == 'insert' or mode == 'insert_or_update':
             start = "INSERT INTO "
+        elif mode == 'ignore':
+            start = 'INSERT IGNORE INTO '
         elif mode == 'replace':
             start = "REPLACE INTO "
+        else:
+            raise
         sql = "%s %s ( %s ) VALUES ( %s )" % (start, table_name, columns, placeholders)
 
         if mode == "insert_or_update":
@@ -221,6 +225,9 @@ class DB(object):
             if sql_operator == 'in':
                 query += " %s %s in (%s)" % (place, key[0], ','.join(['%s']*len(value)),)
                 args.extend(list(value))
+            elif sql_operator == 'nin':
+                query += " %s %s not in (%s)" % (place, key[0], ','.join(['%s']*len(value)),)
+                args.extend(list(value))
             elif sql_operator == 'sql':
                 query += " %s %s" % (place, value)
             elif isinstance(value, Field):
@@ -242,6 +249,7 @@ class DB(object):
             'lt': '<',
             'lte': '<=',
             'in': 'in',
+            'nin': 'nin',
             'like': 'like',
             'regexp': 'regexp',
             'sql': 'sql',
