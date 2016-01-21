@@ -175,7 +175,7 @@ class DB(object):
 
         return row_count
 
-    def query(self, table_name,query_dict={},fields=['*'],page=1,page_num=50,
+    def query(self, table_name,query_dict={},fields=['*'],page=0,page_num=50,
                        group_by='',order_by='',print_sql=False, slave=False):
 
         if page == 0:
