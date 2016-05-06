@@ -7,9 +7,10 @@ DESCRIPTION = "simple mysql orm"
 AUTHOR = "lovedboy"
 AUTHOR_EMAIL = "lovedboy.tk@qq.com"
 URL = "https://github.com/lovedboy/smysql"
-VERSION = '0.2.7'
+VERSION = '0.2.8'
 
 setup(
+    install_requires=['MySQL-python'],
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,
