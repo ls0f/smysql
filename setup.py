@@ -4,13 +4,13 @@ from setuptools import setup,find_packages
 PACKAGE = "smysql"
 NAME = "smysql"
 DESCRIPTION = "simple mysql orm"
-AUTHOR = "lovedboy"
-AUTHOR_EMAIL = "lovedboy.tk@qq.com"
-URL = "https://github.com/lovedboy/smysql"
-VERSION = '0.2.8'
+AUTHOR = "ls0f"
+AUTHOR_EMAIL = "ls0f@example.com"
+URL = "https://github.com/ls0f/smysql"
+VERSION = '0.2.9'
 
 setup(
-    install_requires=['MySQL-python'],
+    install_requires=['pymysql'],
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,

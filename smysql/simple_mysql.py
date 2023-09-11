@@ -3,7 +3,13 @@
 import logging
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger("smysql")
-import MySQLdb
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+    import MySQLdb
+except ImportError:
+    import MySQLdb
+
 
 
 class DBConfig(object):
@@ -84,11 +90,11 @@ class DB(object):
     def test_with_ok(self):
 
         with self:
-            print 'i am ok '
+            print('i am ok ')
 
     def test_with_error(self):
         with self:
-            print 'i am wrong'
+            print('i am wrong')
             assert 1==2
 
     @staticmethod
@@ -110,7 +116,7 @@ class DB(object):
             raise
         placeholders = ', '.join(['%s'] * len(obj_dict))
         columns = ', '.join(obj_dict.keys())
-        args = obj_dict.values()
+        args = tuple(obj_dict.values())
         start = ''
         if mode == 'insert' or mode == 'insert_or_update':
             start = "INSERT INTO "
